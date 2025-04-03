@@ -1,4 +1,4 @@
-package Chapter01.ex01.before;
+package Chapter01.ex01.after;
 
 public class Play {
     private final String name;
@@ -16,4 +16,4 @@ public class Play {
     public PlayType getType() {
         return type;
     }
-}
+} 

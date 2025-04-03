@@ -1,4 +1,4 @@
-package Chapter01.ex01.before;
+package Chapter01.ex01.after;
 
 import java.util.Map;
 import java.util.List;
@@ -25,9 +25,14 @@ public class App {
                 new Performance("othello", 40)
         ));
 
-        // Statement 로직 실행
+        // Statement 로직 실행 (텍스트 버전)
         Statement statement = new Statement();
         String result = statement.statement(invoice, plays);
+        System.out.println("====== 텍스트 버전 ======");
         System.out.println(result);
+        
+        // HTML 버전 출력
+        System.out.println("\n====== HTML 버전 ======");
+        System.out.println(statement.htmlStatement(invoice, plays));
     }
-}
+} 

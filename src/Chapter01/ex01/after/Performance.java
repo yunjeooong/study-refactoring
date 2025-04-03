@@ -1,4 +1,4 @@
-package Chapter01.ex01.before;
+package Chapter01.ex01.after;
 
 public class Performance {
     private final String playID;
@@ -16,4 +16,4 @@ public class Performance {
     public int getAudience() {
         return audience;
     }
-}
+} 
