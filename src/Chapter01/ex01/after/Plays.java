@@ -1,4 +1,4 @@
-package Chapter01.ex01.before;
+package Chapter01.ex01.after;
 
 import java.util.Map;
 
@@ -12,4 +12,4 @@ public class Plays {
     public Play get(Performance performance) {
         return plays.get(performance.getPlayID());
     }
-}
+} 

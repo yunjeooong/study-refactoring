@@ -1,4 +1,4 @@
-package Chapter01.ex01.before;
+package Chapter01.ex01.after;
 
 import java.util.List;
 
@@ -18,4 +18,4 @@ public class Invoice {
     public List<Performance> getPerformances() {
         return performances;
     }
-}
+} 
