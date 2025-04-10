@@ -24,12 +24,14 @@
 얼핏 순서가 뒤바뀐 것처럼 느껴질 수 있지만, 이는 매우 유익한 접근법.
 테스트를 먼저 작성하면 원하는 기능이 무엇인지 고민하게 되고, 실제 구현보다는 인터페이스 설계에 집중할 수 있습니다.
 또한, 테스트가 모두 통과되는 시점을 코딩 완료 시점으로 명확히 정의할 수 있다.
-이러한 "테스트 먼저 작성" 습관 👉🏻 **테스트 주도 개발(Test-Driven Development, TDD)** 을 개발했습니다. TDD는 다음 과정을 따릅니다:
+이러한 "테스트 먼저 작성" 습관 
+👉🏻 **테스트 주도 개발(Test-Driven Development, TDD)** 
+TDD는 다음 과정을 따른다:
 
 1. 테스트를 먼저 작성
 2. 테스트를 통과하도록 코드 작성
 3. 코드 리팩토링
-4. 
+
 이번 장에서는 테스트 코드 작성 방법을 소개한다.
 테스트 자체가 주제는 아니므로 깊이 들어가지는 않겠지만, 테스트가 어떤 효과를 가져오는지 확실히 정리해보겠다.. 
 
@@ -66,13 +68,6 @@
 다음은 **생산 부족분(shortfall)** 을 테스트하는 코드. 
 
 ```java
-import com.example.demo.Province;
-import com.example.demo.SampleProvinceFactory;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-class ProvinceTest {
-
  @Test
  void shortfallTest() {
   // given
@@ -98,8 +93,215 @@ class ProvinceTest {
 
 - 테스트의 목적은 향후 버그를 방지하고 발견하는 것이므로, 위험한 부분에 집중해야 한다.
 - 예를 들어, get()이나 set() 같은 단순 메서드는 테스트할 필요가 없다.
-- 
 
+```java
+  @Test
+void profitTest(){
+ //given
+ Province sampleProvince = SampleProvinceFactory.getSampleProvince();
+ int answer = 230;
+ //when
+ int result = sampleProvince.profit();
+ //then
+ assertEquals(answer, result);
+}
+```
+![img_1.png](img_1.png)
+
+**중복 제거**
+
+위 테스트에서 Province sampleProvince = SampleProvinceFactory.getSampleProvince(); 
+부분이 shortfallTest와 중복된다. 중복은 제거하는 것이 좋지만, 단순히 객체를 클래스 수준에서 공유하는 방식은 추천하지 않ㄴ,ㄴ다.
+
+👉🏻이유: 한 테스트가 객체를 변경하면 다른 테스트에 영향을 줄 수 있기 때문!
+
+대신, `@BeforeEach`를 사용해 각 테스트마다 새로운 객체를 생성하도록 수정해야한다.
+
+위에서 말한 bad case
+
+```java
+class ProvinceTest {
+
+    Province sampleProvince = SampleProvinceFactory.getSampleProvince();
+    
+    @Test
+    void shortfallTest(){
+        //given
+        int answer = 5;
+        //when
+        int result = sampleProvince.shortFall();
+        //then
+        assertEquals(answer, result);
+    }
+
+    @Test
+    void profitTest(){
+        //given
+        int answer = 230;
+        //when
+        int result = sampleProvince.profit();
+        //then
+        assertEquals(answer, result);
+    }
+}
+```
+`@BeforeEach`를 사용한 good case
+```java
+class ProvinceTest {
+
+    Province sampleProvince;
+
+    @BeforeEach
+    void setUp() {
+        sampleProvince = SampleProvinceFactory.getSampleProvince();
+    }
+
+    @Test
+    void shortfallTest(){
+        //given
+        int answer = 5;
+        //when
+        int result = sampleProvince.shortFall();
+        //then
+        assertEquals(answer, result);
+    }
+
+    @Test
+    void profitTest(){
+        //given
+        int answer = 230;
+        //when
+        int result = sampleProvince.profit();
+        //then
+        assertEquals(answer, result);
+    }
+}
+```
+정리하자면 공유 픽처스를 사용하면 안되고 **불변의 객체** 를 가지고 테스트를 진행해야 한다.
+
+## 4.5 픽스처 수정하기
+지금까지는 고정된 픽스처(샘플 데이터)를 사용했지만,
+실제로는 Setter 메서드로 데이터가 변경될 수 있다.
+특히 Producer 클래스의 setProduction() 메서드는 totalProduction을 업데이트하므로, 이를 테스트해야 한다.
+
+```java
+@Test
+void changeProductionTest() {
+// given
+int shortFall = -6;
+int profit = 292;
+// when
+sampleProvince.getProducers().get(0).setProduction(20);
+int actualShortFall = sampleProvince.shortFall();
+int actualProfit = sampleProvince.profit();
+// then
+assertEquals(shortFall, actualShortFall);
+assertEquals(profit, actualProfit);
+}
+```
+
+![img_2.png](img_2.png)
+
+이 테스트는 두 개의 assertEquals()를 사용했지만, 일반적으로 한 테스트에는 하나의 검증만 두는 것이 좋다.
+👉🏻이유: 첫 번째 검증이 실패하면 두 번째 검증이 실행되지 않아 유용한 정보를 놓칠 수 있기 때문!
+
+
+## 4.6 경계 조건 검사하기
+지금까지는 정상적인 데이터로 테스트를 진행했다. 하지만 경계 조건에서도 문제가 없는지 확인해야 한다.
+
+예를 들어, 생산자가 없는 경우를 테스트해보겠다.
+
+```java
+@Test
+void noProducersTest() {
+// given
+Province province = new Province("No Producers", new ArrayList<>(), 30, 20);
+int shortFall = 30;
+int profit = 0;
+// when
+int actualShortFall = province.shortFall();
+int actualProfit = province.profit();
+// then
+assertEquals(shortFall, actualShortFall);
+assertEquals(profit, actualProfit);
+}
+```
+![img_3.png](img_3.png)
+
+**일반적인 데이터의 경우에는 맞지않는 특이한 데이터를 넣어보자**
+
+ex)
+- 수요가 0인 경우: 수요는 음수가 될 수 없으므로 최소값 0을 테스트.
+
+유효성 검사는 너무 많으면 중복 체크로 비효율적이 될 수 있지만, 
+외부 시스템에서 받은 데이터(예: JSON)는 항상 검증하는 것이 좋다.
+
+**테스트 범위 고민**
+"테스트를 어느 정도까지 해야 할까?"라는 질문은 흔함.
+
+테스트는 개발 속도를 높여주지만, 과도하게 집착하면 기능 추가 의욕이 떨어질 수 있다.
+위험한 부분과 복잡한 로직을 우선적으로 테스트하자.
+
+테스트 코드 full ver
+
+```java
+class ProvinceTest {
+
+    Province sampleProvince;
+
+    @BeforeEach
+    void setUp() {
+        sampleProvince = SampleProvinceFactory.getSampleProvince();
+    }
+
+    @Test
+    void shortfallTest(){
+        //given
+        int answer = 5;
+        //when
+        int result = sampleProvince.shortFall();
+        //then
+        assertEquals(answer, result);
+    }
+
+    @Test
+    void profitTest(){
+        //given
+        int answer = 230;
+        //when
+        int result = sampleProvince.profit();
+        //then
+        assertEquals(answer, result);
+    }
+    @Test
+    void changeProductionTest() {
+        // given
+        int shortFall = -6;
+        int profit = 292;
+        // when
+        sampleProvince.getProducers().get(0).setProduction(20);
+        int actualShortFall = sampleProvince.shortFall();
+        int actualProfit = sampleProvince.profit();
+        // then
+        assertEquals(shortFall, actualShortFall);
+        assertEquals(profit, actualProfit);
+    }
+
+    @Test
+    void noProducersTest(){
+        //given
+        Province province = new Province("No Producers", new ArrayList<>(), 30, 20);
+        int shortFall = 30;
+        int profit = 0;
+        //when
+        int actualShortFall = province.shortFall();
+        int actualProfit = province.profit();
+        //then
+        assertEquals(shortFall, actualShortFall);
+        assertEquals(profit, actualProfit);
+    }
+}
+```
 ## 4.7 정리
 
 이 장에서는 테스트에 대해 간략히 소개했다. 이 책의 핵심은 리팩토링이므로 테스트에 깊이 들어가지는 않았다.
