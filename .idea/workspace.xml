@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="acd38f0f-43ca-40d9-92fd-a1af972ae41b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chapter01/ex01/before/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chapter01/ex01/before/Invoice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chapter01/ex01/before/Performance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chapter01/ex01/before/Play.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chapter01/ex01/before/PlayType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chapter01/ex01/before/Plays.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chapter01/ex01/before/Statement.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chapter01/ex01/docs/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Chapter01/ex01/docs/study.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study_refacotor.iml" afterDir="false" />
-    </list>
+    <list default="true" id="acd38f0f-43ca-40d9-92fd-a1af972ae41b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,6 +21,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "yunjeooong"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/yunjeooong/study-refactoring.git",
+    "accountId": "ce166765-990b-42a6-bdc8-f775916aa367"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -55,7 +50,7 @@
     "Application.Chapter01.ex01.after.App.executor": "Run",
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/yunjeong/Desktop/cs_study/study_refacotor",
     "node.js.detected.package.eslint": "true",
@@ -63,6 +58,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "terminal",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -130,7 +126,7 @@
       <option name="presentableId" value="Default" />
       <updated>1743645191712</updated>
       <workItem from="1743645192787" duration="5174000" />
-      <workItem from="1743667007380" duration="6741000" />
+      <workItem from="1743667007380" duration="12824000" />
     </task>
     <servers />
   </component>

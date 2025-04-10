@@ -35,15 +35,16 @@ public class Province {
         totalProduction += producer.production;
     }
 
-    // 생산 부족분 계산
+    // 생산 부족분을 계산하는 메소드
     public int shortFall() {
         return this.demand - this.totalProduction;
     }
 
-    // 총수익 계산
+    // 수익을 계산하는 메소드
     public int profit() {
         return demandValue() - demandCost();
     }
+
 
     private int demandValue() {
         return satisfiedDemand() * this.price;
@@ -56,24 +57,59 @@ public class Province {
     private int demandCost() {
         int remainDemand = this.demand;
         int result = 0;
+
         this.producers.sort(Comparator.comparingInt(p -> p.cost));
+
         for (Producer p : this.producers) {
             int contribution = Math.min(remainDemand, p.production);
             remainDemand -= contribution;
             result += contribution * p.cost;
         }
+
         return result;
     }
 
-    // Getter와 Setter
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public List<Producer> getProducers() { return producers; }
-    public void setProducers(List<Producer> producers) { this.producers = producers; }
-    public int getTotalProduction() { return totalProduction; }
-    public void setTotalProduction(int totalProduction) { this.totalProduction = totalProduction; }
-    public int getDemand() { return demand; }
-    public void setDemand(int demand) { this.demand = demand; }
-    public int getPrice() { return price; }
-    public void setPrice(int price) { this.price = price; }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Producer> getProducers() {
+        return producers;
+    }
+
+    public void setProducers(List<Producer> producers) {
+        this.producers = producers;
+    }
+
+    public int getTotalProduction() {
+        return totalProduction;
+    }
+
+    public void setTotalProduction(int totalProduction) {
+        this.totalProduction = totalProduction;
+    }
+
+    public int getDemand() {
+        return demand;
+    }
+
+    public void setDemand(int demand) {
+        this.demand = demand;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void adjustProduction(int oldProduction, int newProduction) {
+        totalProduction = totalProduction - oldProduction + newProduction;
+    }
 }
