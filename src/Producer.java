@@ -1,4 +1,6 @@
-package Chapter04.docs;
+package com.example.demo1;
+
+import Chapter04.Province;
 
 public class Producer {
     protected String name;
@@ -52,4 +54,4 @@ public class Producer {
     public void setProvince(Province province) {
         this.province = province;
     }
-}
+} 

@@ -1,4 +1,4 @@
-package Chapter04.docs;
+package Chapter04;
 
 import java.util.ArrayList;
 import java.util.Comparator;

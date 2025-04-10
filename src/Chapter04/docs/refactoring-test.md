@@ -75,4 +75,53 @@
 >- 부족분: 5
 >- 총수익: 230
 
+## 4.3 첫 번째 테스트
 
+다음은 **생산 부족분(shortfall)** 을 테스트하는 코드. 
+
+```java
+import com.example.demo.Province;
+import com.example.demo.SampleProvinceFactory;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class ProvinceTest {
+
+ @Test
+ void shortfallTest() {
+  // given
+  Province sampleProvince = SampleProvinceFactory.getSampleProvince();
+  int answer = 5;
+  // when
+  int result = sampleProvince.shortFall();
+  // then
+  assertEquals(answer, result);
+ }
+} 
+```
+
+![img.png](img.png)
+
+- given: 테스트에 필요한 객체와 데이터를 설정.
+- when: 실제 코드를 실행.
+- then: 결과를 검증.
+
+## 4.4 테스트 추가하기
+
+테스트를 추가할 때는 모든 public 메서드를 무조건 테스트하는 것이 아니라, 위험 요소를 기준으로 작성해야 한다.
+
+- 테스트의 목적은 향후 버그를 방지하고 발견하는 것이므로, 위험한 부분에 집중해야 한다.
+- 예를 들어, get()이나 set() 같은 단순 메서드는 테스트할 필요가 없다.
+- 
+
+## 4.7 정리
+
+이 장에서는 테스트에 대해 간략히 소개했다. 이 책의 핵심은 리팩토링이므로 테스트에 깊이 들어가지는 않았다.
+
+- 여기서 다룬 테스트는 **단위 테스트(Unit Test)** 로, 코드의 작은 영역을 집중적으로 테스트하며 컴포넌트 간 상호작용은 다루지 않는다.
+- 모든 자가 검증 테스트는 단위 테스트에서 시작된다. .
+- 이 외에도 통합 테스트, 성능 테스트 등 다양한 테스트가 존재한다.
+
+테스트 작성 팁
+- 처음부터 완벽한 테스트 케이스를 갖출 수는 없다. 버그 리포트가 발생할 때마다 해당 케이스를 추가하자.
+- 테스트 커버리지는 테스트하지 않은 부분을 찾는 데 유용하지만, 커버리지가 높다고 모든 경우를 테스트한 것은 아님을 알아두자.
